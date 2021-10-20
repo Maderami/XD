@@ -1,0 +1,23 @@
+<document_sys>
+ <docs_s id="111">
+  <titleDoc>Lokes</titleDoc>
+  <authorDoc>Gupt</authorDoc>
+  <creationdate>27.09.2022</creationdate>
+  <registrationdate>27.09.2021</registrationdate>
+  <status>Approve</status>
+ </docs_s>
+ <docs_s id="222">
+  <titleDoc>Alex</titleDoc>
+  <authorDoc>Gussin</authorDoc>
+  <creationdate>27.09.2021</creationdate>
+  <registrationdate>27.09.2021</registrationdate>
+  <status>Approve</status>
+ </docs_s>
+ <docs_s id="333">
+  <titleDoc>David</titleDoc>
+  <authorDoc>Feezor</authorDoc>
+  <creationdate>27.09.2021</creationdate>
+  <registrationdate>27.09.2021</registrationdate>
+  <status>Deflect</status>
+ </docs_s>
+</document_sys>
