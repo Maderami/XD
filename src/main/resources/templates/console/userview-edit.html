@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -424,96 +425,82 @@
         <!-- /.content-header -->
 
         <!-- Main content -->
-        <div class="content w-100">
-            <div class="container-fluid w-100">
-                <div class="row w-100">
+        <div class="content w-100 p-0">
+            <div class="container-fluid w-100 p-0">
+                <div class="row w-100 p-0">
                     <div class="col-lg-11 w-100 m-auto ">
                         <div class="card w-100 m-auto">
                             <div class="card-header border-0 w-100 m-auto">
                                 <div class="d-flex justify-content-between w-100 m-auto">
-                                    <h3 class="card-title">Список пользователей - Добавление</h3>
-
+                                    <h3 class="card-title">Пользователи системы</h3>
+                                    <a href="javascript:void(0);">View list</a>
                                 </div>
                             </div>
+                            <div th:each="lee : ${listUs}">
 
-                            <div class="container">
-                                <h1>Новый пользователь системы</h1>
-                                <form action="/usersadd" method="post">
+                                <form method="post">
                                     <div class="row mb-2 p-0">
                                         <div class="col-md-6 w-100 ">
                                             <H3 class="float-left m-auto w-50">ФИО</H3>
-                                            <input type="text" name="fsm_sub" placeholder=""
+                                            <input type="text" th:value="${lee.fsm_sub}"  name="fsm_sub" placeholder=""
                                                    class="form-control w-100"/>
                                         </div>
                                         <div class="col-md-6 w-100 ">
                                             <H3 class="float-left m-auto w-50">Должность</H3>
-                                            <select type="text" name="position"
-                                                    placeholder="" class="form-control">
-                                                <option value=""> Выберите должность</option>
-
-                                                <option value="Младший консультант">Младший консультант</option>
-                                            </select>
+                                            <input type="text" th:value="${lee.position}" name="position"
+                                                   class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="row mb-2 p-0">
                                         <div class="col-md-6 w-100">
                                             <H3 class="float-left m-auto w-50">Место работы</H3>
-                                            <select type="text" name="place_job"
-                                                    placeholder="" class="form-control">
-                                                <option value=""> Выберите место работы(филиал)</option>
+                                            <input type="text" name="place_job"
+                                                    th:value="${lee.place_job}" class="form-control"/>
 
-                                                <option value="ОНП - Москва">ОНП - Москва</option>
-                                            </select>
                                         </div>
                                         <div class="col-md-6 w-100">
                                             <H3 class="float-left m-auto w-50">Подразделение</H3>
-                                            <select type="text" name="subdivision"
-                                                    placeholder="" class="form-control">
-                                                <option value="">Выберите подразделение</option>
+                                            <input type="text" name="subdivision"
+                                                   th:value="${lee.subdivision}"   placeholder="" class="form-control"/>
 
-                                                <option value="Отдел информационных технологий">Отдел информационных
-                                                    технологий
-                                                </option>
-                                            </select>
                                         </div>
                                     </div>
                                     <div class="row mb-2 p-0">
                                         <div class="col-md-6 w-100 ">
                                             <H3 class="float-left m-auto w-50">Телефон</H3>
-                                            <input type="text" name="phone_sub"
+                                            <input th:value="${lee.phone_sub}" type="text" name="phone_sub"
                                                    placeholder="" class="form-control"/>
                                         </div>
                                         <div class="col-md-6 w-100 ">
                                             <H3 class="float-left m-auto w-50">Роль</H3>
-                                            <select type="text" name="role_sub"
-                                                    placeholder="" class="form-control">
-                                                <option value="">Выберите роль</option>
+                                            <input type="text" name="role_sub"
+                                                    th:value="${lee.role_sub}"  placeholder="" class="form-control"/>
 
-                                                <option value="1">Сотрудник</option>
-                                                <option value="6">Генеральный директор</option>
-                                            </select>
                                         </div>
                                     </div>
                                     <div class="row mb-2 p-0">
                                         <div class="col-md-6 w-100  ">
                                             <H3 class="float-left m-auto w-50">Почтовый адрес</H3>
-                                            <input type="text" name="post_address"
+                                            <input type="text" th:value="${lee.post_address}" name="post_address"
                                                    placeholder="" class="form-control"/>
                                         </div>
                                         <div class="col-md-6 w-100">
                                             <H3 class=" m-auto w-50">Активация аккаунта</H3>
- 
-                                            <input type="checkbox" name="active_acc" value="true"
- 
-                                                   class="form-control"/>
-                                        </div>
-                                    </div>
+                                            <input id="activecheck" type="checkbox"  name="active_acc"
+                                                   class="form-control" th:checked="${lee.active_acc}"/>
 
-                                    <div class="m-auto text-center">
-                                        <button type="submit" class="btn btn-success">Добавить пользователея</button>
+
+
+
+                                        </div>
+
                                     </div>
+                                    <button type="submit" class="btn btn-success">Update document</button>
                                 </form>
+
+
                             </div>
+
                         </div>
 
                     </div>
@@ -559,5 +546,8 @@
 <script src="dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="dist/js/pages/dashboard3.js"></script>
+
+
 </body>
+
 </html>

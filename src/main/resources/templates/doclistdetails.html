@@ -15,7 +15,7 @@
 
 
         <h3 th:text="${lee.title_doc}"></h3>
-        <p ><b>Автор документа:</b><span th:text="' '+${lee.author}"></span></p>
+        <p ><b>Автор документа:</b><span th:text="' '+${lee.author.fsm_sub}"></span></p>
         <p ><b>Дата создания документа: </b><span th:text="${lee.creation_doc}"></span></p>
         <p ><b>Дата регистрации документа: </b><span th:text="${lee.registration_doc}"></span></p>
         <p ><b>Статус документа: </b><span th:text="${lee.status}"></span></p>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -415,7 +416,9 @@
                                     <a href="javascript:void(0);">View list</a>
                                 </div>
                             </div>
-                            <div th:each="lee : ${users}" class="card-body table-responsive p-0">
+
+                            <div  class="card-body table-responsive p-0">
+
                                 <table class="table table-striped table-valign-middle">
                                     <thead>
                                     <tr>
@@ -428,53 +431,33 @@
                                         <th>Почтовый адрес</th>
                                         <th>Номер аккаунта</th>
                                         <th>Активировать</th>
-                                    <tbody>
-                                                      <tr>
-                                                        <td th:text="${}">
 
-                                                        </td>
-                                                        <td th:text="${}">
+                                    <tbody >
+                                                      <tr th:each="lee : ${listDocs}">
+                                                        <td><a th:href="'/userview-edit-'+${lee.id_user}" class="btn btn-warning" th:text="${lee.fsm_sub}">
 
-                                                        </td>
-                                                        <td th:text="${}">
+                                                        </a></td>
+                                                        <td  th:text="${lee.position}"></td>
+                                                        <td  th:text="${lee.place_job}"></td>
+                                                        <td  th:text="${lee.subdivision}"></td>
+                                                        <td  th:text="${lee.phone_sub}"></td>
+                                                        <td  th:text="${lee.role_sub}"></td>
+                                                        <td  th:text="${lee.post_address}"></td>
+                                                        <td  th:text="${lee.id_user}"></td>
+                                                        <td  th:text="${lee.active_acc}"></td>
 
-                                                        </td>
-                                                        <td th:text="${}">
-
-                                                        </td>
-                                                        <td th:text="${}">
-
-                                                        </td>
-                                                        <td th:text="${}">
-
-                                                        </td>
-                                                        <td th:text="${}">
-
-                                                        </td>
-                                                        <td th:text="${}">
-
-                                                        </td>
                                                       </tr>
                                     </tbody>
 
 
-                                            <h3 th:text="${lee.title_doc}"></h3>
-                                            <p ><b>Автор документа:</b><span th:text="' '+${lee.author}"></span></p>
-                                            <p ><b>Дата создания документа: </b><span th:text="${lee.creation_doc}"></span></p>
-                                            <p ><b>Дата регистрации документа: </b><span th:text="${lee.registration_doc}"></span></p>
-                                            <p ><b>Статус документа: </b><span th:text="${lee.status}"></span></p>
-                                            <p ><b>Комментарий к документу: </b><span th:text="${lee.description_doc}"></span></p>
-
-
-                                            <form th:action="'/doclist/'+${lee.id_doc}+'/delete'" method="post">
-                                                <a th:href="'/doclist/'+${lee.id_doc}+'/edit'" class="btn btn-warning">Editing</a>
-                                                <button  class="btn btn-warning" type="submit">Deleting</button>
-                                            </form>
-
                                     </tr>
                                     </thead>
+
                                 </table>
+
                             </div>
+
+
                         </div>
 
                     </div>

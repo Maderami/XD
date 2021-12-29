@@ -1,9 +1,6 @@
 package com.docjpa.laba2.JPA.S.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -19,6 +16,12 @@ public class ListDocs {
 
     private String status;
 
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private User author;
+
+    private int views;
+
     public String getStatus() {
         return status;
     }
@@ -27,17 +30,13 @@ public class ListDocs {
         this.status = status;
     }
 
-    public String getAuthor() {
+    public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
-
-    private String author;
-
-    private int views;
 
     public Long getId_doc() {
         return id_doc;
@@ -90,7 +89,7 @@ public class ListDocs {
     public ListDocs() {
     }
 
-    public ListDocs(String title_doc, String description_doc, LocalDate creation_doc, LocalDate registration_doc, String status, String author ) {
+    public ListDocs(String title_doc, String description_doc, LocalDate creation_doc, LocalDate registration_doc, String status, User author) {
 
         this.title_doc = title_doc;
         this.description_doc = description_doc;

@@ -1,124 +1,170 @@
 package com.docjpa.laba2.JPA.S.controlers;
 
 import com.docjpa.laba2.JPA.S.models.ListDocs;
-import com.docjpa.laba2.JPA.S.models.Users;
+import com.docjpa.laba2.JPA.S.models.User;
 import com.docjpa.laba2.JPA.S.repo.ListDocRepository;
 import com.docjpa.laba2.JPA.S.repo.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.util.ListUtils;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Optional;
+import java.sql.SQLException;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Controller
 public class AdminController {
+
+
+    @Autowired
+    private ListDocRepository listdocrepository;
+
     @Autowired
     private UsersRepository usersRepository;
+
+
+
+//    @RequestMapping(
+//            value = "/console",
+//            produces = "model/ListDocs",
+//            method = RequestMethod.GET)
     @GetMapping("/console")
-    public String documentConsole(Model model){
-        model.addAttribute("title", "Main console and control pages");
+
+    public String documentConsole(Model model) {
+//        AtomicInteger countdocu = new AtomicInteger();
+//        int i = 0;int j = 0;
+//        ArrayList<ListDocs> res = new ArrayList<>();
+//        List<User> users =  usersRepository.findAll();
+//        List<ListDocs> lisd = listdocrepository.findAll();
+//        List<ArrayList<User>> arr=new ArrayList();
+//        for(i=0; i<3; i++){
+//            ArrayList <User> arr1=new ArrayList<>();
+//            for( j=0; j<2;j++){
+//                ListDocs pass=new ListDocs();
+//                arr1.add(pass);
+//            }
+//            arr.add(arr1);
+//        }
+//
+//        while(i<lisd.size()){
+//
+//
+//                listdocrepository2 = listdocrepository.findByName(lisd.get(i).getAuthor().getId_user());
+//                listdocrepository2.ifPresentOrElse((value)
+//                        -> { countdocu.set(0);},  ()
+//                        -> {  countdocu.getAndSet(countdocu.intValue()+1); listdocrepository2.ifPresent(res::add);});
+//
+//            i++;
+//
+//        }
+//
+//        model.addAttribute("userC", users);
+//        int countusers = (int) usersRepository.count();
+//        int gencountdocs = (int) listdocrepository.count();
+//        model.addAttribute("listU", users);
+//        model.addAttribute("res", res);
+//        model.addAttribute("listd", lisd);
+//        model.addAttribute("gencountusers", countusers);
+//        model.addAttribute("gencountdocs", gencountdocs);
+//        model.addAttribute("countdocu", countdocu);
         return "/console/index3";
     }
+
     @GetMapping("/index2")
-    public String documentConsoleDash1(Model model){
+    public String documentConsoleDash1(Model model) {
         model.addAttribute("title", "Main console and control pages");
         return "/console/index2";
     }
+
     @GetMapping("/index3")
-    public String documentConsoleDash2(Model model){
+    public String documentConsoleDash2(Model model) {
         model.addAttribute("title", "Main console and control pages");
         return "/console/index";
     }
+
     @GetMapping("/syssett")
-    public String documentConsoleSysst(Model model){
+    public String documentConsoleSysst(Model model) {
         model.addAttribute("title", "Main console and control pages");
         return "syssett";
     }
+
     @GetMapping("/webset")
-    public String documentConsoleWebst(Model model){
+    public String documentConsoleWebst(Model model) {
         model.addAttribute("title", "Main console and control pages");
         return "webset";
     }
+
     @GetMapping("/controldata")
-    public String documentConsoleCondt(Model model){
+    public String documentConsoleCondt(Model model) {
         model.addAttribute("title", "Main console and control pages");
         return "controldata";
     }
+
     @GetMapping("/console/card-doc-control")
-    public String documentConsoleAction(Model model){
+    public String documentConsoleAction(Model model) {
         model.addAttribute("title", "Main console and control pages");
         return "/console/card-doc-control";
     }
 
+    @GetMapping("/statcontrol")
+    public String statConsoleAction(Model model) {
+        model.addAttribute("title", "Main console and control pages");
+        return "/console/stat-control";
+    }
+
     @GetMapping("/usersadd")
-    public String usersConsoleControlAdd(Model model){
+    public String usersConsoleControlAdd(Model model) {
         model.addAttribute("title", "Main console and control pages");
         return "/console/users-add";
     }
 
     @GetMapping("/usersview")
-    public String usersConsoleControlView(Model model){
-        model.addAttribute("title", "Main console and control pages");
+    public String usersConsoleControlView(Model model) {
+        Iterable<User> listDocs = usersRepository.findAll();
+        model.addAttribute("listDocs", listDocs);
         return "/console/users-view";
     }
 
     @PostMapping("/usersadd")
     public String docAddPost(@RequestParam String fsm_sub, @RequestParam String position, @RequestParam String place_job, @RequestParam String subdivision
-            , @RequestParam String phone_sub, @RequestParam String role_sub, @RequestParam String post_address, @RequestParam String active_acc,Model model){
+            , @RequestParam String phone_sub, @RequestParam String role_sub, @RequestParam String post_address,
+                             @RequestParam(required = false, defaultValue = "false") boolean active_acc, Model model) {
 
-        Users users = new Users(fsm_sub, position, place_job,subdivision,phone_sub,post_address,role_sub,active_acc);
-        usersRepository.save(users);
+        User user = new User(fsm_sub, position, place_job, subdivision, phone_sub, post_address, role_sub, active_acc);
+        usersRepository.save(user);
         return "redirect:/console";
     }
 
-//    @GetMapping("/doclist/{id_doc}")
-//    public String DocumentDetails(@PathVariable(value="id_doc") long id_doc, Model model) {
-//        if(!listdocrepository.existsById(id_doc)) {
-//            return "redirect:/";
-//        }
-//        Optional<ListDocs> listD = listdocrepository.findById(id_doc);
-//        ArrayList<ListDocs> res = new ArrayList<>();
-//        listD.ifPresent(res::add);
-//        model.addAttribute("listD", res);
-//        return "doclistdetails";
-//    }
-//    @GetMapping("/doclist/{id_doc}/edit")
-//    public String DocumentEdit(@PathVariable(value="id_doc") long id_doc,Model model) {
-//        if(!listdocrepository.existsById(id_doc)) {
-//            return "redirect:/";
-//        }
-//        Optional<ListDocs> listD = listdocrepository.findById(id_doc);
-//        ArrayList<ListDocs> res = new ArrayList<>();
-//        listD.ifPresent(res::add);
-//        model.addAttribute("listD", res);
-//        return "doclistedit";
-//    }
-//
-//    @PostMapping("/doclist/{id_doc}/edit")
-//    public String docUpdatePost(@PathVariable(value="id_doc") long id_doc,@RequestParam String title_doc, @RequestParam String author,@RequestParam String creation_doc,@RequestParam String registration_doc
-//            ,@RequestParam String status,@RequestParam String description_doc, Model model){
-//        ListDocs listds = listdocrepository.findById(id_doc).orElseThrow();
-//        listds.setTitle_doc(title_doc);
-//        listds.setAuthor(author);
-//        listds.setCreation_doc(LocalDate.parse(creation_doc));
-//        listds.setRegistration_doc(LocalDate.parse(registration_doc));
-//        listds.setStatus(status);
-//        listds.setDescription_doc(description_doc);
-//        listdocrepository.save(listds);
-//        return "redirect:/doclist";
-//    }
-//    @PostMapping("/doclist/{id_doc}/delete")
-//    public String docDeletePost(@PathVariable(value="id_doc") long id_doc, Model model){
-//        ListDocs listds = listdocrepository.findById(id_doc).orElseThrow();
-//        listdocrepository.delete(listds);
-//        return "redirect:/doclist";
-//    }
+    @GetMapping("/userview-edit-{id_user}")
+    public String DocumentEdit(@PathVariable(value = "id_user") int id_user, Model model) {
+        if (!usersRepository.existsById(id_user)) {
+            return "redirect:/usersview";
+        }
+        Optional<User> listU = usersRepository.findById(id_user);
+        ArrayList<User> res = new ArrayList<>();
+        listU.ifPresent(res::add);
+        model.addAttribute("listUs", res);
+        return "/console/userview-edit";
+    }
+
+    @PostMapping("/userview-edit-{id_user}")
+    public String docUpdatePost(@PathVariable(value = "id_user") int id_user, @RequestParam String fsm_sub, @RequestParam String position, @RequestParam String place_job, @RequestParam String subdivision
+            , @RequestParam String phone_sub, @RequestParam String role_sub, @RequestParam String post_address,
+                                @RequestParam(required = false, defaultValue = "false") boolean active_acc, Model model) {
+        User listU = usersRepository.findById(id_user).orElseThrow();
+        listU.setFsm_sub(fsm_sub);
+        listU.setSubdivision(subdivision);
+        listU.setPosition(position);
+        listU.setPlace_job(place_job);
+        listU.setPhone_sub(phone_sub);
+        listU.setPost_address(post_address);
+        listU.setActive_acc(active_acc);
+        listU.setRole_sub(role_sub);
+
+        usersRepository.save(listU);
+        return "redirect:/usersview";
+    }
 
 }
