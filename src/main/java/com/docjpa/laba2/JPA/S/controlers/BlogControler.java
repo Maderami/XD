@@ -115,6 +115,7 @@ public class BlogControler {
 //        return "actionDocument";
 //    }
     @GetMapping("/documentCount")
+
     public String documentCount(Model model) {
 
         Iterable<ListDocs> listDocs = listdocrepository.findAll();
@@ -123,6 +124,7 @@ public class BlogControler {
         model.addAttribute("countApprove", countApprove);
         return "documentCount";
     }
+
 
 
 }
