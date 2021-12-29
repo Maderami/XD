@@ -71,8 +71,8 @@ public class BlogControler {
         ListDocs listds = listdocrepository.findById(id_doc).orElseThrow();
         listds.setTitle_doc(title_doc);
         listds.setAuthor(author);
-        listds.setCreation_doc(LocalDate.parse( creation_doc, DateTimeFormatter.ofPattern("dd-mm-yyyy")));
-        listds.setRegistration_doc( LocalDate.parse(registration_doc,DateTimeFormatter.ofPattern("dd-mm-yyyy")));
+        listds.setCreation_doc(LocalDate.parse(creation_doc));
+        listds.setRegistration_doc(LocalDate.parse(registration_doc));
         listds.setStatus(status);
         listds.setDescription_doc(description_doc);
         listdocrepository.save(listds);
@@ -91,12 +91,14 @@ public class BlogControler {
 //    }
     @GetMapping("/documentCount")
     public String documentCount( Model model) {
-        long countApprove = listdocrepository.count();
+
         Iterable<ListDocs> listDocs = listdocrepository.findAll();
+        long countApprove = listdocrepository.count();
         model.addAttribute("lists", listDocs);
         model.addAttribute("countApprove",countApprove);
         return "documentCount";
     }
+
 
 
 }
